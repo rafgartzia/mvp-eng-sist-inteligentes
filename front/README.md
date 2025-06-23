@@ -1,8 +1,4 @@
-# Meu Front
-
-Este pequeno projeto faz parte do material diático da Disciplina **Desenvolvimento Full Stack Básico** 
-
-O objetivo aqui é ilutsrar o conteúdo apresentado na terceira aula.
+# MVP Engenharia de Sistemas Inteligentes
 
 ---
 ## Como executar

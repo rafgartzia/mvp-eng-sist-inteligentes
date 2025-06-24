@@ -105,17 +105,17 @@ def predict(form: PacienteSchema):
     model_path = "./MachineLearning/pipelines/rf_diabetes_pipeline.pkl"
     modelo = pipeline.carrega_pipeline(model_path)
     # Realizando a predição
-    outcome = int(modelo.predict(X_input)[0])
+    riskLevel = int(modelo.predict(X_input)[0])
 
     paciente = Paciente(
         name=name,
         age=age,
-        systolicBP=systolicBP,
-        diastolicBP=diastolicBP,
+        systolicbp=systolicBP,
+        diastolicbp=diastolicBP,
         bs=bs,
-        bodyTemp=bodyTemp,
-        heartRate=heartRate,
-        riskLevel=riskLevel
+        bodytemp=bodyTemp,
+        heartrate=heartRate,
+        risklevel=riskLevel
     )
     logger.debug(f"Adicionando produto de nome: '{paciente.name}'")
 

@@ -3,56 +3,48 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 from typing import Union
 
-from  model import Base
+from model import Base
 
-# colunas = Pregnancies,Glucose,BloodPressure,SkinThickness,test,BMI,DiabetesPedigreeFunction,Age,Outcome
 
 class Paciente(Base):
     __tablename__ = 'pacientes'
-    
+
     id = Column(Integer, primary_key=True)
-    name= Column("Name", String(50))
-    preg = Column("Pregnacies", Integer)
-    plas = Column("Glucose", Integer)
-    pres = Column("BloodPressure", Integer)
-    skin = Column("SkinThickness", Integer)
-    test = Column("Insulin", Integer)
-    mass = Column("BMI", Float)
-    pedi = Column("DiabetesPedigreeFunction", Float)
+    name = Column("Name", String(100))
     age = Column("Age", Integer)
-    outcome = Column("Diagnostic", Integer, nullable=True)
+    systolicbp = Column("SystolicBP", Integer)
+    diastolicbp = Column("DiastolicBP", Integer)
+    bs = Column("BloodSugar", Integer)
+    bodytemp = Column("BodyTemp", float)
+    hearthrate = Column("HearthRate", Integer)
+    riskLevel = Column("Diagnostic", float)
     data_insercao = Column(DateTime, default=datetime.now())
-    
-    def __init__(self, preg:int, plas:int, pres:int, name:str,
-                 skin:int, test:int, mass:float, 
-                 pedi:float, age:int, outcome:int, 
-                 data_insercao:Union[DateTime, None] = None):
+
+    def __init__(self, name: str, age: int, systolicbp: int, diastolicbp: int,
+                 bs: int, bodytemp: float, hearthrate: int, risklevel: float,
+                 data_insercao: Union[DateTime, None] = None):
         """
-        Cria um Paciente
+        Cria uma Paciente
 
         Arguments:
         name: nome do paciente
-            preg: número de gestações
-            plas: concentração de glicose
-            pres: pressão sanguínea
-            skin: espessura da pele
-            test: insulina
-            mass: índice de massa corporal
-            pedi: função pedigree
-            age: idade
-            outcome: diagnóstico
+            age: idade da paciente
+            systolicBP: pressão arterial sistólica - mm de Hg
+            diastolicBP: pressão arterial diastólica - mm de Hg
+            bs: nível de glicose no sangue - mg/dL
+            bodyTemp: temperatura corporal - °C
+            hearthRate: frequência cardíaca - bpm
+            riskLevel: nível de risco do paciente - 0 baixo risco, 1 risco moderado, 2 alto risco
             data_insercao: data de quando o paciente foi inserido à base
         """
-        self.name=name
-        self.preg = preg
-        self.plas = plas
-        self.pres = pres
-        self.skin = skin
-        self.test = test
-        self.mass = mass
-        self.pedi = pedi
+        self.name = name
         self.age = age
-        self.outcome = outcome
+        self.systolicbp = systolicbp
+        self.diastolicbp = diastolicbp
+        self.bs = bs
+        self.bodytemp = bodytemp
+        self.hearthrate = hearthrate
+        self.risklevel = risklevel
 
         # se não for informada, será o data exata da inserção no banco
         if data_insercao:

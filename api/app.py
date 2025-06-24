@@ -11,7 +11,7 @@ from flask_cors import CORS
 
 
 # Instanciando o objeto OpenAPI
-info = Info(title="Minha API", version="1.0.0")
+info = Info(title="MVP Eng. Sist. Inteligentes", version="1.0.0")
 app = OpenAPI(
     __name__, info=info, static_folder="../front", static_url_path="/front"
 )
@@ -20,11 +20,11 @@ CORS(app)
 # Definindo tags para agrupamento das rotas
 home_tag = Tag(
     name="Documentação",
-    description="Seleção de documentação: Swagger, Redoc ou RapiDoc",
+    description="Seleção de documentação: Swagger",
 )
 paciente_tag = Tag(
     name="Paciente",
-    description="Adição, visualização, remoção e predição de pacientes com Diabetes",
+    description="Adição, visualização, remoção e predição de risco materno",
 )
 
 
@@ -66,7 +66,7 @@ def get_pacientes():
         # Se não houver pacientes
         return {"pacientes": []}, 200
     else:
-        logger.debug(f"%d pacientes econtrados" % len(pacientes))
+        logger.debug(f"%d pacientes encontrados" % len(pacientes))
         print(pacientes)
         return apresenta_pacientes(pacientes), 200
 
@@ -83,7 +83,7 @@ def get_pacientes():
 )
 def predict(form: PacienteSchema):
     """Adiciona um novo paciente à base de dados
-    Retorna uma representação dos pacientes e diagnósticos associados.
+    Retorna uma representação dos pacientes e risco associado.
 
     """
     # Instanciando classes
@@ -92,14 +92,12 @@ def predict(form: PacienteSchema):
 
     # Recuperando os dados do formulário
     name = form.name
-    preg = form.preg
-    plas = form.plas
-    pres = form.pres
-    skin = form.skin
-    test = form.test
-    mass = form.mass
-    pedi = form.pedi
     age = form.age
+    systolicBP = form.systolicBP
+    diastolicBP = form.diastolicBP
+    bs = form.bs
+    bodyTemp = form.bodyTemp
+    heartRate = form.heartRate
 
     # Preparando os dados para o modelo
     X_input = preprocessador.preparar_form(form)
@@ -111,15 +109,13 @@ def predict(form: PacienteSchema):
 
     paciente = Paciente(
         name=name,
-        preg=preg,
-        plas=plas,
-        pres=pres,
-        skin=skin,
-        test=test,
-        mass=mass,
-        pedi=pedi,
         age=age,
-        outcome=outcome,
+        systolicBP=systolicBP,
+        diastolicBP=diastolicBP,
+        bs=bs,
+        bodyTemp=bodyTemp,
+        heartRate=heartRate,
+        riskLevel=riskLevel
     )
     logger.debug(f"Adicionando produto de nome: '{paciente.name}'")
 

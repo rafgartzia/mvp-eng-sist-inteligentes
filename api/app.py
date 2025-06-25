@@ -102,7 +102,7 @@ def predict(form: PacienteSchema):
     # Preparando os dados para o modelo
     X_input = preprocessador.preparar_form(form)
     # Carregando modelo
-    model_path = "./MachineLearning/pipelines/rf_diabetes_pipeline.pkl"
+    model_path = "./MachineLearning/models/cart_maternalRisk.pkl"
     modelo = pipeline.carrega_pipeline(model_path)
     # Realizando a predição
     riskLevel = int(modelo.predict(X_input)[0])

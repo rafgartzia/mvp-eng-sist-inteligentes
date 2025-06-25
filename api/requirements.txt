@@ -14,3 +14,4 @@ pytest
 jupyter
 matplotlib
 flask-openapi3[swagger]
+pickle5

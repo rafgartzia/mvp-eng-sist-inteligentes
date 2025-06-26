@@ -9,6 +9,9 @@ from logger import logger
 from schemas import *
 from flask_cors import CORS
 
+import numpy as np
+import pickle
+
 
 # Instanciando o objeto OpenAPI
 info = Info(title="MVP Eng. Sist. Inteligentes", version="1.0.0")
@@ -97,13 +100,17 @@ def predict(form: PacienteSchema):
     diastolicBP = form.diastolicBP
     bs = form.bs
     bodyTemp = form.bodyTemp
-    heartRate = form.heartRate
+    hearthRate = form.hearthRate
 
-    # Preparando os dados para o modelo
-    X_input = preprocessador.preparar_form(form)
+    X_input = np.array(
+        [name, age, systolicBP, diastolicBP, bs, bodyTemp, hearthRate])
+
+    X_input = X_input.reshape(1, -1)
+
     # Carregando modelo
     model_path = "./MachineLearning/models/cart_maternalRisk.pkl"
-    modelo = pipeline.carrega_pipeline(model_path)
+    modelo = pickle.load(open(model_path, "rb"))
+
     # Realizando a predição
     riskLevel = int(modelo.predict(X_input)[0])
 
@@ -114,7 +121,7 @@ def predict(form: PacienteSchema):
         diastolicbp=diastolicBP,
         bs=bs,
         bodytemp=bodyTemp,
-        heartrate=heartRate,
+        hearthrate=hearthRate,
         risklevel=riskLevel
     )
     logger.debug(f"Adicionando produto de nome: '{paciente.name}'")

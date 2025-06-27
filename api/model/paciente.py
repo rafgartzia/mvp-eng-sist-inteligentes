@@ -15,9 +15,9 @@ class Paciente(Base):
     systolicbp = Column("SystolicBP", Integer)
     diastolicbp = Column("DiastolicBP", Integer)
     bs = Column("BloodSugar", Integer)
-    bodytemp = Column("BodyTemp", float)
+    bodytemp = Column("BodyTemp", Float)
     hearthrate = Column("HearthRate", Integer)
-    riskLevel = Column("Diagnostic", float)
+    riskLevel = Column("Diagnostic", Float)
     data_insercao = Column(DateTime, default=datetime.now())
 
     def __init__(self, name: str, age: int, systolicbp: int, diastolicbp: int,

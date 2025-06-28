@@ -10,18 +10,18 @@ class Paciente(Base):
     __tablename__ = 'pacientes'
 
     id = Column(Integer, primary_key=True)
-    name = Column("Name", String(100))
-    age = Column("Age", Integer)
-    systolicbp = Column("SystolicBP", Integer)
-    diastolicbp = Column("DiastolicBP", Integer)
-    bs = Column("BloodSugar", Integer)
-    bodytemp = Column("BodyTemp", Float)
-    hearthrate = Column("HearthRate", Integer)
-    riskLevel = Column("Diagnostic", Float)
-    data_insercao = Column(DateTime, default=datetime.now())
+    name = Column("name", String(100))
+    age = Column("age", Integer)
+    systolic_bp = Column("systolic_bp", Integer)
+    diastolic_bp = Column("diastolic_bp", Integer)
+    blood_sugar = Column("blood_sugar", Integer)
+    body_temp = Column("body_temp", Float)
+    heart_rate = Column("heart_rate", Integer)
+    risk_level = Column("risk_level", Float)
+    data_insercao = Column("data_insercao", DateTime, default=datetime.now())
 
-    def __init__(self, name: str, age: int, systolicbp: int, diastolicbp: int,
-                 bs: int, bodytemp: float, hearthrate: int, risklevel: float,
+    def __init__(self, name: str, age: int, systolic_bp: int, diastolic_bp: int,
+                 blood_sugar: int, body_temp: float, heart_rate: int, risk_level: float,
                  data_insercao: Union[DateTime, None] = None):
         """
         Cria uma Paciente
@@ -29,22 +29,22 @@ class Paciente(Base):
         Arguments:
         name: nome do paciente
             age: idade da paciente
-            systolicBP: pressão arterial sistólica - mm de Hg
-            diastolicBP: pressão arterial diastólica - mm de Hg
-            bs: nível de glicose no sangue - mg/dL
-            bodyTemp: temperatura corporal - °C
-            hearthRate: frequência cardíaca - bpm
-            riskLevel: nível de risco do paciente - 0 baixo risco, 1 risco moderado, 2 alto risco
+            systolic_bp: pressão arterial sistólica - mm de Hg
+            diastolic_bp: pressão arterial diastólica - mm de Hg
+            blood_sugar: nível de glicose no sangue - mg/dL
+            body_temp: temperatura corporal - °C
+            heart_rate: frequência cardíaca - bpm
+            risk_level: nível de risco do paciente - 0 baixo risco, 1 risco moderado, 2 alto risco
             data_insercao: data de quando o paciente foi inserido à base
         """
         self.name = name
         self.age = age
-        self.systolicbp = systolicbp
-        self.diastolicbp = diastolicbp
-        self.bs = bs
-        self.bodytemp = bodytemp
-        self.hearthrate = hearthrate
-        self.risklevel = risklevel
+        self.systolic_bp = systolic_bp
+        self.diastolic_bp = diastolic_bp
+        self.blood_sugar = blood_sugar
+        self.body_temp = body_temp
+        self.heart_rate = heart_rate
+        self.risk_level = risk_level
 
         # se não for informada, será o data exata da inserção no banco
         if data_insercao:

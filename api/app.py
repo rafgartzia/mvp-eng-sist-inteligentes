@@ -89,21 +89,19 @@ def predict(form: PacienteSchema):
     Retorna uma representação dos pacientes e risco associado.
 
     """
-    # Instanciando classes
-    preprocessador = PreProcessador()
-    pipeline = Pipeline()
 
     # Recuperando os dados do formulário
     name = form.name
     age = form.age
-    systolicBP = form.systolicBP
-    diastolicBP = form.diastolicBP
-    bs = form.bs
-    bodyTemp = form.bodyTemp
-    hearthRate = form.hearthRate
+    systolic_bp = form.systolic_bp
+    diastolic_bp = form.diastolic_bp
+    blood_sugar = form.blood_sugar
+    body_temp = form.body_temp
+    heart_rate = form.heart_rate
 
     X_input = np.array(
-        [name, age, systolicBP, diastolicBP, bs, bodyTemp, hearthRate])
+        [age, systolic_bp, diastolic_bp, blood_sugar, body_temp, heart_rate]
+    )
 
     X_input = X_input.reshape(1, -1)
 
@@ -112,17 +110,17 @@ def predict(form: PacienteSchema):
     modelo = pickle.load(open(model_path, "rb"))
 
     # Realizando a predição
-    riskLevel = int(modelo.predict(X_input)[0])
+    risk_level = int(modelo.predict(X_input)[0])
 
     paciente = Paciente(
         name=name,
         age=age,
-        systolicbp=systolicBP,
-        diastolicbp=diastolicBP,
-        bs=bs,
-        bodytemp=bodyTemp,
-        hearthrate=hearthRate,
-        risklevel=riskLevel
+        systolic_bp=systolic_bp,
+        diastolic_bp=diastolic_bp,
+        blood_sugar=blood_sugar,
+        body_temp=body_temp,
+        heart_rate=heart_rate,
+        risk_level=risk_level
     )
     logger.debug(f"Adicionando produto de nome: '{paciente.name}'")
 

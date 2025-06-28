@@ -8,11 +8,11 @@ class PacienteSchema(BaseModel):
     """
     name: str = "Tatiana"
     age: int = 30
-    systolicBP: int = 100
-    diastolicBP: int = 70
-    bs: int = 90
-    bodyTemp: float = 36.5
-    heartRate: int = 80
+    systolic_bp: int = 100
+    diastolic_bp: int = 70
+    blood_sugar: int = 90
+    body_temp: float = 36.5
+    heart_rate: int = 80
 
 
 class PacienteViewSchema(BaseModel):
@@ -21,12 +21,12 @@ class PacienteViewSchema(BaseModel):
     id: int = 1
     name: str = "Tatiana"
     age: int = 30
-    systolicBP: int = 100
-    diastolicBP: int = 70
-    bs: int = 90
-    bodyTemp: float = 36.5
-    heartRate: int = 80
-    riskLevel: float = None
+    systolic_bp: int = 100
+    diastolic_bp: int = 70
+    blood_sugar: int = 90
+    body_temp: float = 36.5
+    heart_rate: int = 80
+    risk_level: float = None
 
 
 class PacienteBuscaSchema(BaseModel):
@@ -58,12 +58,12 @@ def apresenta_paciente(paciente: Paciente):
         "id": paciente.id,
         "name": paciente.name,
         "age": paciente.age,
-        "systolicBP": paciente.systolicBP,
-        "diastolicBP": paciente.diastolicBP,
-        "bs": paciente.bs,
-        "bodyTemp": paciente.bodyTemp,
-        "heartRate": paciente.heartRate,
-        "riskLevel": paciente.riskLevel
+        "systolic_bp": paciente.systolic_bp,
+        "diastolic_bp": paciente.diastolic_bp,
+        "blood_sugar": paciente.blood_sugar,
+        "body_temp": paciente.body_temp,
+        "heart_rate": paciente.heart_rate,
+        "risk_level": paciente.risk_level
     }
 
 # Apresenta uma lista de pacientes
@@ -79,12 +79,12 @@ def apresenta_pacientes(pacientes: List[Paciente]):
             "id": paciente.id,
             "name": paciente.name,
             "age": paciente.age,
-            "systolicBP": paciente.systolicBP,
-            "diastolicBP": paciente.diastolicBP,
-            "bs": paciente.bs,
-            "bodyTemp": paciente.bodyTemp,
-            "heartRate": paciente.heartRate,
-            "riskLevel": paciente.riskLevel
+            "systolic_bp": paciente.systolic_bp,
+            "diastolic_bp": paciente.diastolic_bp,
+            "blood_sugar": paciente.blood_sugar,
+            "body_temp": paciente.body_temp,
+            "heart_rate": paciente.heart_rate,
+            "risk_level": paciente.risk_level
         })
 
     return {"pacientes": result}

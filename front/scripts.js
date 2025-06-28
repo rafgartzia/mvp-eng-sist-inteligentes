@@ -11,15 +11,13 @@ const getList = async () => {
     .then((response) => response.json())
     .then((data) => {
       data.pacientes.forEach(item => insertList(item.name, 
-                                                item.preg, 
-                                                item.plas,
-                                                item.pres,
-                                                item.skin,
-                                                item.test,
-                                                item.mass,
-                                                item.pedi,
-                                                item.age,
-                                                item.outcome
+                                                item.age, 
+                                                item.systolic_bp,
+                                                item.diastolic_bp,
+                                                item.blood_sugar,
+                                                item.body_temp,
+                                                item.heart_rate,
+                                                item.risk_level
                                               ))
     })
     .catch((error) => {
@@ -68,20 +66,19 @@ document.addEventListener('DOMContentLoaded', function() {
   Função para colocar um item na lista do servidor via requisição POST
   --------------------------------------------------------------------------------------
 */
-const postItem = async (inputPatient, inputPreg, inputPlas,
-                        inputPres, inputSkin, inputTest, 
-                        inputMass, inputPedi, inputAge) => {
+const postItem = async (inputName, inputAge, inputSystolicBP,
+                        inputDiastolicBP, inputBloodSugar, inputBodyTemp,
+                        inputHeartRate) => {
     
   const formData = new FormData();
-  formData.append('name', inputPatient);
-  formData.append('preg', inputPreg);
-  formData.append('plas', inputPlas);
-  formData.append('pres', inputPres);
-  formData.append('skin', inputSkin);
-  formData.append('test', inputTest);
-  formData.append('mass', inputMass);
-  formData.append('pedi', inputPedi);
+  formData.append('name', inputName);
   formData.append('age', inputAge);
+  formData.append('systolic_bp', inputSystolicBP);
+  formData.append('diastolic_bp', inputDiastolicBP);
+  formData.append('blood_sugar', inputBloodSugar);
+  formData.append('body_temp', inputBodyTemp);
+  formData.append('heart_rate', inputHeartRate);
+
 
   let url = 'http://127.0.0.1:5000/paciente';
   return fetch(url, {
@@ -159,50 +156,50 @@ const deleteItem = (item) => {
 const newItem = async (event) => {
   event.preventDefault();
 
-  let inputPatient = document.getElementById("newInput").value;
-  let inputPreg = document.getElementById("newPreg").value;
-  let inputPlas = document.getElementById("newPlas").value;
-  let inputPres = document.getElementById("newPres").value;
-  let inputSkin = document.getElementById("newSkin").value;
-  let inputTest = document.getElementById("newTest").value;
-  let inputMass = document.getElementById("newMass").value;
-  let inputPedi = document.getElementById("newPedi").value;
-  let inputAge = document.getElementById("newAge").value;
+  let inputName = document.getElementById("newName").value;
+  let inputAge= document.getElementById("newAge").value;
+  let inputSystolicBP = document.getElementById("newSystolicBP").value;
+  let inputDiastolicBP = document.getElementById("newDiastolicBP").value;
+  let inputBloodSugar = document.getElementById("newBloodSugar").value;
+  let inputBodyTemp = document.getElementById("newBodyTemp").value;
+  let inputHeartRate = document.getElementById("newHeartRate").value;
 
-  // Verifique se o nome do produto já existe antes de adicionar
+
+  // Verifique se o nome da paciente já existe antes de adicionar
   const checkUrl = `http://127.0.0.1:5000/pacientes?nome=${inputPatient}`;
   fetch(checkUrl, {
     method: 'get'
   })
     .then((response) => response.json())
     .then(async (data) => {
-      if (data.pacientes && data.pacientes.some(item => item.name === inputPatient)) {
-        alert("O paciente já está cadastrado.\nCadastre o paciente com um nome diferente ou atualize o existente.");
-      } else if (inputPatient === '') {
-        alert("O nome do paciente não pode ser vazio!");
-      } else if (isNaN(inputPreg) || isNaN(inputPlas) || isNaN(inputPres) || isNaN(inputSkin) || isNaN(inputTest) || isNaN(inputMass) || isNaN(inputPedi) || isNaN(inputAge)) {
+      if (data.pacientes && data.pacientes.some(item => item.name === inputName)) {
+        alert("A paciente já está cadastrada.\nCadastre a paciente com um nome diferente ou atualize o existente.");
+      } else if (inputName === '') {
+        alert("O nome da paciente não pode ser vazio!");
+      } else if (isNaN(inputAge) || isNaN(inputSystolicBP) || isNaN(inputDiastolicBP) || isNaN(inputBloodSugar) || isNaN(inputBodyTemp) || isNaN(inputHeartRate)) {
         alert("Esse(s) campo(s) precisam ser números!");
       } else {
         try {
           // Envia os dados para o servidor e aguarda a resposta com o diagnóstico
-          const result = await postItem(inputPatient, inputPreg, inputPlas, inputPres, inputSkin, inputTest, inputMass, inputPedi, inputAge);
+          const result = await postItem(inputName, inputAge, inputSystolicBP,
+                                        inputDiastolicBP, inputBloodSugar, inputBodyTemp,
+                                        inputHeartRate);
             // Limpa o formulário
-          document.getElementById("newInput").value = "";
-          document.getElementById("newPreg").value = "";
-          document.getElementById("newPlas").value = "";
-          document.getElementById("newPres").value = "";
-          document.getElementById("newSkin").value = "";
-          document.getElementById("newTest").value = "";
-          document.getElementById("newMass").value = "";
-          document.getElementById("newPedi").value = "";
+          document.getElementById("newName").value = "";
           document.getElementById("newAge").value = "";
+          document.getElementById("newSystolicBP").value = "";
+          document.getElementById("newDiastolicBP").value = "";
+          document.getElementById("newBloodSugar").value = "";
+          document.getElementById("newBodyTemp").value = "";
+          document.getElementById("newHeartRate").value = "";
+
           
           // Recarrega a lista completa para mostrar o novo paciente com o diagnóstico
           await refreshList();
           
           // Mostra mensagem de sucesso com o diagnóstico
-          const diagnostico = result.outcome === 1 ? "DIABÉTICO" : "NÃO DIABÉTICO";
-          alert(`Paciente adicionado com sucesso!\nDiagnóstico: ${diagnostico}`);
+          const risco = result.risk_level === 0 ? "BAIXO" : result.risk_level === 1 ? "MÉDIO" : "ALTO";
+          alert(`Paciente adicionado com sucesso!\nRisco materno: ${risco}`);
           
           // Scroll para a tabela para mostrar o novo resultado
           document.querySelector('.items').scrollIntoView({ 
@@ -228,8 +225,8 @@ const newItem = async (event) => {
   Função para inserir items na lista apresentada
   --------------------------------------------------------------------------------------
 */
-const insertList = (namePatient, preg, plas, pres, skin, test, mass, pedi, age, outcome) => {
-  var item = [namePatient, preg, plas, pres, skin, test, mass, pedi, age];
+const insertList = (name, age, systolic_bp, diastolic_bp,  blood_sugar, body_temp, heart_rate, risk_level) => {
+  var item = [name, age, systolic_bp, diastolic_bp,  blood_sugar, body_temp, heart_rate, risk_level];
   var table = document.getElementById('myTable');
   var row = table.insertRow();
 
@@ -240,15 +237,18 @@ const insertList = (namePatient, preg, plas, pres, skin, test, mass, pedi, age, 
   }
 
   // Insere a célula do diagnóstico com styling
-  var diagnosticCell = row.insertCell(item.length);
-  const diagnosticText = outcome === 1 ? "DIABÉTICO" : "NÃO DIABÉTICO";
-  diagnosticCell.textContent = diagnosticText;
+  var riskCell = row.insertCell(item.length);
+  const riskText = risk_level === 0 ? "BAIXO" : result.risk_level === 1 ? "MÉDIO" : "ALTO";
+  riskCell.textContent = riskText;
+
   
   // Aplica styling baseado no diagnóstico
-  if (outcome === 1) {
-    diagnosticCell.className = "diagnostic-positive";
+  if (risk_level === 0) {
+    riskCellCell.className = "low-risk";
+  } else if (risk_level === 1) {
+    riskCell.className = "mid-risk";
   } else {
-    diagnosticCell.className = "diagnostic-negative";
+    riskCell.className = "high-risk";
   }
 
   // Insere o botão de deletar

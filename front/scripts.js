@@ -166,7 +166,7 @@ const newItem = async (event) => {
 
 
   // Verifique se o nome da paciente já existe antes de adicionar
-  const checkUrl = `http://127.0.0.1:5000/pacientes?nome=${inputPatient}`;
+  const checkUrl = `http://127.0.0.1:5000/pacientes?nome=${inputName}`;
   fetch(checkUrl, {
     method: 'get'
   })
@@ -238,13 +238,13 @@ const insertList = (name, age, systolic_bp, diastolic_bp,  blood_sugar, body_tem
 
   // Insere a célula do diagnóstico com styling
   var riskCell = row.insertCell(item.length);
-  const riskText = risk_level === 0 ? "BAIXO" : result.risk_level === 1 ? "MÉDIO" : "ALTO";
+  const riskText = risk_level === 0 ? "BAIXO" : risk_level === 1 ? "MÉDIO" : "ALTO";
   riskCell.textContent = riskText;
 
   
   // Aplica styling baseado no diagnóstico
   if (risk_level === 0) {
-    riskCellCell.className = "low-risk";
+    riskCell.className = "low-risk";
   } else if (risk_level === 1) {
     riskCell.className = "mid-risk";
   } else {

@@ -18,13 +18,13 @@ def client():
 def sample_patient_data():
     """Dados de exemplo para teste de paciente"""
     return {
-        "name": "Maria",
+        "name": "Tatiana",
         "age": 30,
-        "systolic_bp": 120,
-        "diastolic_bp": 80,
-        "blood_sugar": 75,
-        "body_temp": 37.5,
-        "heart_rate": 70
+        "systolic_bp": 100,
+        "diastolic_bp": 70,
+        "blood_sugar": 90,
+        "body_temp": 36.5,
+        "heart_rate": 80
     }
 
 

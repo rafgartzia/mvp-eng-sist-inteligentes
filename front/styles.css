@@ -1,7 +1,7 @@
 body,
 ul,
 li {
-    font-family: tahoma;
+    font-family: 'Roboto', tahoma;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -18,7 +18,7 @@ header {
 .title {
     color: white;
     width: 100%;
-    background-color: rgb(35, 32, 24);
+    background-color: rgb(202, 66, 66);
     display: inline-block;
     padding: 2px 0px;
     position: sticky;
@@ -132,7 +132,7 @@ td {
 }
 
 th {
-    background-color: rgb(35, 32, 24);
+    background-color: rgb(120, 0, 0);
     color: white;
     font-weight: bold;
     text-align: center;
@@ -197,8 +197,8 @@ table{
         min-width: 90px; /* Nome column */
     }
     
-    th:nth-child(10), td:nth-child(10) {
-        min-width: 100px; /* Diagnostic column */
+    th:nth-child(9), td:nth-child(9) {
+        min-width: 100px;
     }
     
     .newItem {
@@ -325,15 +325,29 @@ tr:hover {
 }
 
 /* Diagnostic styling */
-.diagnostic-positive {
+.high-risk {
     background-color: #ffebee !important;
     color: #c62828;
     font-weight: bold;
 }
 
-.diagnostic-negative {
+.mid-risk {
+    background-color: #e1f88d !important;
+    color: #8a9405;
+    font-weight: bold;
+}
+
+.low-risk {
     background-color: #e8f5e8 !important;
     color: #2e7d32;
     font-weight: bold;
 }
 
+input:valid {
+    background-color: palegreen;
+  }
+  
+  input:invalid {
+    background-color: lightpink;
+  }
+  

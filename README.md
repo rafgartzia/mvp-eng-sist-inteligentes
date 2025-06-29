@@ -1,5 +1,5 @@
 # Pós Eng. Soft. PUC-Rio
-## MVP Dev. Full Stack Básico - mvp-api
+## MVP Dev. Qualidade de Software, Segurança e Sistemas Inteligentes
 
 
 ### Intro
